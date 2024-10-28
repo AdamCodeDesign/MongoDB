@@ -3,7 +3,11 @@ const MongoClient = mongo.MongoClient;
 
 async function processDB() {
   const url = "mongodb://127.0.01:27017";
-  const client = new MongoClient(url);
+  const client = new MongoClient(url, {monitorCommands: true});
+
+  client.on('commandStarted', data=> console.log('commandStarted: ', data))
+  client.on('commandSucceeded', data=> console.log('commandSucceeded: ', data))
+  client.on('commandFailed', data=> console.log('commandFailed: ', data))
 
   try {
     await client.connect();
