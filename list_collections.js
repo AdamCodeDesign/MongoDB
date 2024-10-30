@@ -2,7 +2,7 @@ const mongo = require("mongodb");
 const MongoClient = mongo.MongoClient;
 
 async function processDB() {
-  const url = "mongodb://127.0.01:27017";
+  const url = "mongodb://127.0.0.1:27017";
   const client = new MongoClient(url, {monitorCommands: true});
 
   client.on('commandStarted', data=> console.log('commandStarted: ', data))

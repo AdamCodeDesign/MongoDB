@@ -2,7 +2,7 @@ const mongo = require("mongodb");
 const MongoClient = mongo.MongoClient;
 
 async function processDB() {
-  const url = "mongodb://127.0.01:27017";
+  const url = "mongodb://127.0.0.1:27017";
   const client = new MongoClient(url);
 
   try {
@@ -24,7 +24,7 @@ async function processDB() {
 
     const result = await collection.insertMany(students, options);
     console.log(result.insertedCount + " students were saved");
-    
+
   } catch (error) {
     console.error(error);
   } finally {
