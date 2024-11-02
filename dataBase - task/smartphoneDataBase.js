@@ -1,6 +1,7 @@
 import { MongoClient as _MongoClient } from "mongodb";
 const MongoClient = _MongoClient;
 
+// nawiazywanie polaczenia z serwerem i tworzenie klienta
 async function initDB() {
   const url = "mongodb://127.0.0.1:27017";
   let client = null;
@@ -14,6 +15,7 @@ async function initDB() {
   }
 }
 
+// tworzenie bazy danych i kolekcji
 async function addDataToDB(client) {
   try {
     const db = client.db("smartphonesDataBase");
@@ -33,6 +35,7 @@ async function addDataToDB(client) {
   }
 }
 
+// wyswietlanie bazy danych
 async function showSmartphones(collection, options = {}, resultLimit = 10) {
   try {
     const cursor = collection.find(options).limit(resultLimit);
@@ -46,12 +49,12 @@ async function showSmartphones(collection, options = {}, resultLimit = 10) {
       });
 
       return results;
-    } else {
-      return "No data found";
     }
   } catch (error) {
     console.error(error);
   }
+
+  return [];
 }
 
 async function updateSmartphonesByName(collection, name, updateFields) {
@@ -62,6 +65,7 @@ async function updateSmartphoneByName(collection, name, updateFields) {
   await collection.updateOne({ name }, { $set: updateFields });
 }
 
+// funkcja wywolujaca zmiany
 async function main() {
   let client = null;
   try {
@@ -74,7 +78,7 @@ async function main() {
     await updateSmartphonesByName(collection, "iphone", { model: "max" });
     await updateSmartphoneByName(collection, "iphone", {
       color: "silver",
-      screenSIze: 6,
+      screenSize: 6,
       data: { apps: ["netflix", "max", "appleTV"] },
     });
 
@@ -82,7 +86,7 @@ async function main() {
   } catch (error) {
     console.error(error);
   } finally {
-    await client.close();
+    if (client) await client.close();
   }
 }
 
