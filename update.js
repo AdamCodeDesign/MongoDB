@@ -53,6 +53,14 @@ async function showCars(collection, options = {}, resultLimit = 5) {
   }
 }
 
+async function updateCarsByName(collection, name, updateFields) {
+  await collection.updateMany({ name }, { $set: updateFields });
+}
+
+async function updateCarByName(collection, name, updateFields) {
+  await collection.updateOne({ name }, { $set: updateFields });
+}
+
 async function main() {
   let client = null;
 
@@ -61,6 +69,16 @@ async function main() {
     // await addDataToDB(client);
 
     const collection = client.db("carTestDB").collection("cars");
+
+    await updateCarsByName(collection, "Almera", {
+      color: "gold",
+      topSpeed: 180,
+    });
+    await updateCarByName(collection, "Mustang", {
+      color: "silver",
+      topSpeed: 200,
+      data: { seats: 5, doors: 3 },
+    });
     const cars = await showCars(collection, {}, 10);
   } catch (error) {
     console.log(error);
