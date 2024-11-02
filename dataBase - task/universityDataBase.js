@@ -11,7 +11,7 @@ async function initDB() {
     await client.connect();
     return client;
   } catch (error) {
-    console.log('Bład polaczenia z serwerem',error);
+    console.log("Bład polaczenia z serwerem", error);
   }
 }
 
@@ -20,9 +20,15 @@ async function addStudentToDB(client) {
     const db = client.db("UniversityDataBase");
     let collection = db.collection("students");
 
-    const result = await collection.insertOne(randomPerson());
+    const students = [];
+
+    for (let i = 0; i < 20; i++) {
+      students.push(randomPerson());
+    }
+
+    const result = await collection.insertMany(students);
   } catch (error) {
-    console.log('Blad wczytania studenta',error);
+    console.log("Blad wczytania studenta", error);
   }
 }
 
@@ -40,4 +46,4 @@ async function main() {
   }
 }
 
-main()
+main();
