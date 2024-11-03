@@ -42,7 +42,7 @@ async function showSmartphones(collection, options = {}, resultLimit = 10) {
     const results = await cursor.toArray();
 
     if (results.length > 0) {
-      console.log(`Found ${results.length} data: `);
+      console.log(`Found ${results.length} students: `);
 
       results.forEach((element, i) => {
         console.log(element);
